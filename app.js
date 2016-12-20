@@ -10,6 +10,14 @@ const sharp = require('sharp');
 const s3 = new AWS.S3();
 const app = express();
 
+const allowedFileExtensions = [
+  '.png',
+  '.gif',
+  '.jpg',
+  '.jpeg',
+  '.webp'
+];
+
 app.get('/', healthCheck);
 app.get('/image/:bucketId/*', getResource);
 app.get('/v1/image/:bucketId/*', getResource);
@@ -28,6 +36,21 @@ function healthCheck(appRequest, appResponse) {
 
 function getResource(appRequest, appResponse) {
 
+  let parsedPath = Path.parse(appRequest.params[0]);
+
+  if (allowedFileExtensions.indexOf(parsedPath.ext) == -1 ) {
+
+    appResponse.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    appResponse
+      .status(400)
+      .send({
+        error: 'Bad Request'
+      });
+
+    return false;
+
+  }
+
   let getObject = s3.getObject({
     Bucket: appRequest.params.bucketId,
     Key: appRequest.params[0]
@@ -43,8 +66,8 @@ function getResource(appRequest, appResponse) {
 
     let data = resp.data;
 
-    appResponse.set('Cache-Control', data.CacheControl || 'max-age=7776000');
-    appResponse.set('Content-Type', data.ContentType);
+    appResponse.setHeader('Cache-Control', data.CacheControl || 'public, proxy-revalidate, max-age=7776000');
+    appResponse.setHeader('Content-Type', data.ContentType);
 
   });
 
