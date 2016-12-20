@@ -66,7 +66,7 @@ function getResource(appRequest, appResponse) {
 
     let data = resp.data;
 
-    appResponse.setHeader('Cache-Control', data.CacheControl || 'public, proxy-revalidate, max-age=7776000');
+    appResponse.setHeader('Cache-Control', 'public, proxy-revalidate, max-age=7776000');
     appResponse.setHeader('Content-Type', data.ContentType);
 
   });
