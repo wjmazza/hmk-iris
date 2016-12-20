@@ -14,7 +14,7 @@ app.get('/', healthCheck);
 app.get('/image/:bucketId/*', getResource);
 app.get('/v1/image/:bucketId/*', getResource);
 
-app.listen(80, () => console.log('started'));
+app.listen(8080, () => console.log('started'));
 
 //////////////
 

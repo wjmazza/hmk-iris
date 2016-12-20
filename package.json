@@ -7,7 +7,7 @@
     "test": "npm test",
     "start": "pm2 start pm2-dev.config.js",
     "docker-build": "docker build -t iris .",
-    "docker-start": "docker run -d -p 80:80 -p 9615:9615 iris",
+    "docker-start": "docker run -d -p 80:8080 -p 9615:9615 iris",
     "docker": "npm run docker-build && npm run docker-start"
   },
   "repository": {
