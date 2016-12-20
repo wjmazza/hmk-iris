@@ -1,0 +1,29 @@
+{
+  "name": "iris",
+  "version": "0.0.1-alpha",
+  "description": "Hallmark Labs Image ResIzing Service",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "pm2 start pm2-dev.config.js",
+    "docker-build": "docker build -t iris .",
+    "docker-start": "docker run -d -p 80:80 -p 9615:9615 iris",
+    "docker": "npm run docker-build && npm run docker-start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hallmarklabs/iris.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hallmarklabs/iris/issues"
+  },
+  "homepage": "https://github.com/hallmarklabs/iris#readme",
+  "dependencies": {
+    "aws-sdk": "^2.7.15",
+    "express": "^4.14.0",
+    "pm2": "^2.2.2",
+    "sharp": "^0.17.0"
+  }
+}
